@@ -1,4 +1,13 @@
-import { CREATE_POST } from '../actions'
+import {
+    FETCHING_POSTS,
+    DID_FETCH_POSTS,
+} from '../actions'
+
+export const home = (state = {}, action) => {
+    switch(action.type) {
+        case 
+    }
+} 
 
 export const posts = (state = {}, action) => {
     switch(action.type) {
@@ -7,4 +16,6 @@ export const posts = (state = {}, action) => {
         default:
             return state
     }
-} 
+}
+
+export default posts
