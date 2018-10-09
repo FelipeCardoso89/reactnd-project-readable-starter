@@ -1,24 +1,20 @@
+import * as BlogAPI from '../../api';
+
 export const FETCH_POSTS = 'FETCH_POSTS'
 export const DID_FETCH_POSTS = 'DID_FETCH_POSTS'
 
-const url = 'http://localhost:3000'
-
-export const fetchPosts = (): ThunkAction => (dispatch) => {
-
-    if(!this.fetch) {
-        return Promise.reject()
-    }
-
-    return fetch(url.concat('/posts'), { headers: { 'Authorization': 'whatever-you-want' }})
-        .then(response => { 
-            let { posts } = response
+export const fetchPosts = () => (dispatch) => (
+    BlogAPI.getAllPosts()
+        .then(posts => { 
+            console.log("Response", posts)
             dispatch(didFetchPosts(posts))
         })
-}
+        .catch(error => { 
+            console.log("Error", error)
+            dispatch(didFetchPosts())
+        })
+)
 
-export const didFetchPosts = (posts) => (dispatch) => ({
-    type: DID_FETCH_POSTS,
-    posts
+export const didFetchPosts = () => ({
+    type: DID_FETCH_POSTS
 })
-
-export default createPost

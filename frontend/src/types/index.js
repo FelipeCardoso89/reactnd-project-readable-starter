@@ -7,4 +7,4 @@ export type Post = {
   createdAt: date,
 }
 
-export default Post
+export type ThunkAction = (dispatch: Dispatch, getState: GetState) => any
