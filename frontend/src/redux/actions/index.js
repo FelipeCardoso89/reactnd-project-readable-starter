@@ -1,20 +1,28 @@
 import * as BlogAPI from '../../api';
 
-export const FETCH_POSTS = 'FETCH_POSTS'
-export const DID_FETCH_POSTS = 'DID_FETCH_POSTS'
+export const FETCH_POSTS_START = 'FETCH_POSTS_START'
+export const FETCH_POSTS_COMPLETE = 'FETCH_POSTS_COMPLETE'
+export const FETCH_POSTS_ERROR = 'FETCH_POSTS_ERROR'
 
-export const fetchPosts = () => (dispatch) => (
-    BlogAPI.getAllPosts()
-        .then(posts => { 
-            console.log("Response", posts)
-            dispatch(didFetchPosts(posts))
-        })
-        .catch(error => { 
-            console.log("Error", error)
-            dispatch(didFetchPosts())
-        })
-)
+export const fetchPosts = () => (dispatch) => {
+    dispatch(fetchingPostsStart())
+    return BlogAPI.getAllPosts().then(posts => { 
+        dispatch(fetchPostsComplete(posts))
+    }).catch(error => { 
+        dispatch(fetchingPostsError(null, error))
+    })
+}
 
-export const didFetchPosts = () => ({
-    type: DID_FETCH_POSTS
+export const fetchingPostsStart = () => ({
+    type: FETCH_POSTS_START
+})
+
+export const fetchPostsComplete = posts => ({
+    type: FETCH_POSTS_COMPLETE,
+    posts
+})
+
+export const fetchingPostsError = error => ({
+    type: FETCH_POSTS_ERROR,
+    error
 })

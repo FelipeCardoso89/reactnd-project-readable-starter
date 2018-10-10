@@ -1,21 +1,35 @@
 import {
-    FETCH_POSTS,
-    DID_FETCH_POSTS,
+    FETCH_POSTS_START,
+    FETCH_POSTS_COMPLETE,
+    FETCH_POSTS_ERROR,
 } from '../actions'
 
-export const home = (state = {}, action) => {
-    switch(action.type) {
-        default:
-            break
-    }
-} 
+const postsInitialState = {
+  loading: false,
+  posts: null,
+  error: null
+}
 
-export const posts = (state = {}, action) => {
+export const posts = (state = postsInitialState, action) => {
     switch(action.type) {
-        case FETCH_POSTS:
-            return state
-        case DID_FETCH_POSTS:
-            return state
+        case FETCH_POSTS_START:
+            return { 
+                ...state,
+                loading: true,
+            }
+        case FETCH_POSTS_COMPLETE:
+            return { 
+                ...state,
+                loading: false,
+                error: null,
+                posts: action.posts
+            }
+        case FETCH_POSTS_ERROR:
+            return { 
+                ...state,
+                loading: false,
+                error: action.error
+            }
         default:
             return state
     }
