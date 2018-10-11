@@ -7,6 +7,7 @@ import { Provider } from 'react-redux'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import store from './redux/store'
 import './index.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const App = ({ store }) => (
     <Provider store={store}>

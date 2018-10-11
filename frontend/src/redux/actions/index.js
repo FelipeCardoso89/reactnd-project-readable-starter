@@ -1,12 +1,13 @@
-import * as BlogAPI from '../../api';
+import { getPosts, getCategories } from '../../api';
 
+// Posts
 export const FETCH_POSTS_START = 'FETCH_POSTS_START'
 export const FETCH_POSTS_COMPLETE = 'FETCH_POSTS_COMPLETE'
 export const FETCH_POSTS_ERROR = 'FETCH_POSTS_ERROR'
 
 export const fetchPosts = () => (dispatch) => {
     dispatch(fetchingPostsStart())
-    return BlogAPI.getAllPosts().then(posts => { 
+    return getPosts().then(posts => { 
         dispatch(fetchPostsComplete(posts))
     }).catch(error => { 
         dispatch(fetchingPostsError(null, error))
@@ -24,5 +25,33 @@ export const fetchPostsComplete = posts => ({
 
 export const fetchingPostsError = error => ({
     type: FETCH_POSTS_ERROR,
+    error
+})
+
+// Comments
+export const FETCH_CATEGORIES_START = 'FETCH_CATEGORIES_START'
+export const FETCH_CATEGORIES_COMPLETE = 'FETCH_CATEGORIES_COMPLETE'
+export const FETCH_CATEGORIES_ERROR = 'FETCH_CATEGORIES_ERROR'
+
+export const fetchCategories = () => (dispatch) => {
+    dispatch(fetchingCategoriesStart())
+    return getCategories().then(category => { 
+        dispatch(fetchCategoriesComplete(category.categories))
+    }).catch(error => { 
+        dispatch(fetchingCategoriesError(null, error))
+    })
+}
+
+export const fetchingCategoriesStart = () => ({
+    type: FETCH_CATEGORIES_START
+})
+
+export const fetchCategoriesComplete = categories => ({
+    type: FETCH_CATEGORIES_COMPLETE,
+    categories
+})
+
+export const fetchingCategoriesError = error => ({
+    type: FETCH_CATEGORIES_ERROR,
     error
 })

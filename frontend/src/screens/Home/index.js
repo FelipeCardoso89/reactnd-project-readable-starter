@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Button } from 'reactstrap';
 
 class Home extends Component {
     componentDidMount() {
@@ -6,10 +7,9 @@ class Home extends Component {
     }
 
     render() {
-        console.log(this.props.posts)
         return (
             <div className="App">
-                {`Número de Posts: ${(this.props.posts && this.props.posts.length) || `0`}`}
+            <Button>Teste</Button>
             </div>
         )
     }
