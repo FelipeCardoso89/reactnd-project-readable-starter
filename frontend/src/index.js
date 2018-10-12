@@ -1,24 +1,24 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import Home from './containers/Home'
-import Detail from './screens/Detail'
-import Categories from './screens/Categories'
-import { Provider } from 'react-redux'
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import store from './redux/store'
-import './index.css'
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React from "react";
+import ReactDOM from "react-dom";
+import Home from "./containers/Home";
+import Detail from "./screens/Detail";
+import Categories from "./screens/Categories";
+import { Provider } from "react-redux";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
+import store from "./redux/store";
+import "./index.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const App = ({ store }) => (
-    <Provider store={store}>
-        <BrowserRouter>
-            <Switch>
-                <Route path="/" exact={true} component={Home} />
-                <Route path="/detail" exact={true} component={Detail} />
-                <Route path="/categories" exact={true} component={Categories} />
-            </Switch>
-        </ BrowserRouter>
-    </Provider>
-)
+  <Provider store={store}>
+    <BrowserRouter>
+      <Switch>
+        <Route path="/" exact={true} component={Home} />
+        <Route path="/detail" exact={true} component={Detail} />
+        <Route path="/categories" exact={true} component={Categories} />
+      </Switch>
+    </BrowserRouter>
+  </Provider>
+);
 
-ReactDOM.render(<App store={store} />, document.getElementById('root'));
+ReactDOM.render(<App store={store} />, document.getElementById("root"));
