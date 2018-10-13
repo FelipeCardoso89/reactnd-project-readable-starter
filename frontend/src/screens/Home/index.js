@@ -1,18 +1,20 @@
 import React, { Component } from "react";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Select,
-  MenuItem
-} from "@material-ui/core";
+import { AppBar, Toolbar, Typography, Button } from "@material-ui/core";
+import { withStyles } from "@material-ui/core/styles";
+import AddIcon from "@material-ui/icons/Add";
 import Post from "../../components/Post";
-import {
-  Container,
-  PostsContainer,
-  PostsActionContainer,
-  ActionContainer
-} from "./styles";
+import { Container, PostsContainer } from "./styles";
+
+const styles = theme => ({
+  button: {
+    position: "absolute",
+    bottom: theme.spacing.unit * 2,
+    right: theme.spacing.unit * 2
+  },
+  extendedIcon: {
+    marginRight: theme.spacing.unit
+  }
+});
 
 class Home extends Component {
   constructor(props) {
@@ -27,7 +29,8 @@ class Home extends Component {
   }
 
   render() {
-    console.log("Categories", this.props.categories);
+    console.log("Categories", this.props);
+    const { classes } = this.props;
     return (
       <div>
         <AppBar position="static">
@@ -39,34 +42,32 @@ class Home extends Component {
         </AppBar>
         <Container>
           <PostsContainer>
-            <PostsActionContainer>
-              <ActionContainer>
-                <Typography>Categoria:</Typography>
-                <Select
-                  value={this.state.category}
-                  onChange={event => {
-                    this.setState({ category: event.target.value }, () => {
-                      this.props.fetchPosts({ category: this.state.category });
-                    });
-                  }}
-                >
-                  <MenuItem value="all">
-                    <em>Todos</em>
-                  </MenuItem>
-                  {this.props.categories &&
-                    this.props.categories.map(category => (
-                      <MenuItem value={category.path}>{category.name}</MenuItem>
-                    ))}
-                </Select>
-              </ActionContainer>
-            </PostsActionContainer>
-            {this.props.posts &&
-              this.props.posts.map(post => <Post key={post.id} {...post} />)}
+            {(this.props.posts &&
+              this.props.posts.length !== 0 &&
+              this.props.posts.map(post => (
+                <Post key={post.id} {...post} />
+              ))) || (
+              <Typography variant="title" color="inherit">
+                Sem postagens
+              </Typography>
+            )}
           </PostsContainer>
         </Container>
+        <Button
+          variant="extendedFab"
+          color="primary"
+          aria-label="Add"
+          className={classes.button}
+          onClick={() => {
+            console.log("clicked");
+          }}
+        >
+          <AddIcon className={classes.extendedIcon} />
+          Adicionar
+        </Button>
       </div>
     );
   }
 }
 
-export default Home;
+export default withStyles(styles)(Home);

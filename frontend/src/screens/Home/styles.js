@@ -11,7 +11,6 @@ export const PostsContainer = styled.div`
   display: flex;
   width: 50%;
   flex-direction: column;
-  background-color: green;
   padding: 16px;
 `;
 
@@ -20,7 +19,6 @@ export const PostsActionContainer = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: stretch;
-  background-color: orange;
   padding: 16px;
 `;
 
@@ -29,5 +27,4 @@ export const ActionContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  background-color: blue;
 `;
