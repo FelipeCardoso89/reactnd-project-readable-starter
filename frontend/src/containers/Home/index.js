@@ -1,5 +1,9 @@
 import { connect } from "react-redux";
-import { fetchPosts, fetchCategories } from "../../redux/actions";
+import {
+  fetchPosts,
+  fetchCategories,
+  fetchPostsFromCategory
+} from "../../redux/actions";
 import Home from "../../screens/Home";
 
 const mapStateToProps = state => ({
@@ -8,7 +12,15 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchPosts() {
+  fetchPosts({ category }) {
+    category && category !== "all"
+      ? dispatch(fetchPostsFromCategory(category))
+      : dispatch(fetchPosts());
+  },
+  fetchCategories() {
+    dispatch(fetchCategories());
+  },
+  fetchInitialData() {
     dispatch(fetchPosts());
     dispatch(fetchCategories());
   }
