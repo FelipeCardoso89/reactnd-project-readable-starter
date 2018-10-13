@@ -2,7 +2,8 @@ import { connect } from "react-redux";
 import {
   fetchPosts,
   fetchCategories,
-  fetchPostsFromCategory
+  fetchPostsFromCategory,
+  postDelete
 } from "../../redux/actions";
 import Home from "../../screens/Home";
 
@@ -23,6 +24,9 @@ const mapDispatchToProps = dispatch => ({
   fetchInitialData() {
     dispatch(fetchPosts());
     dispatch(fetchCategories());
+  },
+  fetchDelete(post) {
+    dispatch(postDelete(post));
   }
 });
 

@@ -1,9 +1,36 @@
-import { getPosts, getCategories, getPostsFromCategory } from "../../api";
+import {
+  getPosts,
+  deletePost,
+  getCategories,
+  getPostsFromCategory
+} from "../../api";
 
 // Posts
+//FETCH
 export const FETCH_POSTS_START = "FETCH_POSTS_START";
 export const FETCH_POSTS_COMPLETE = "FETCH_POSTS_COMPLETE";
 export const FETCH_POSTS_ERROR = "FETCH_POSTS_ERROR";
+
+//DELETE
+export const DELETE_POST_START = "DELETE_POST_START";
+export const DELETE_POST_COMPLETE = "DELETE_POST_COMPLETE";
+export const DELETE_POST_ERROR = "DELETE_POST_ERROR";
+
+//CREATE
+export const CREATE_POST_START = "CREATE_POST_START";
+export const CREATE_POST_COMPLETE = "CREATE_POST_COMPLETE";
+export const CREATE_POST_ERROR = "CREATE_POST_ERROR";
+
+export const postDelete = post => dispatch => {
+  dispatch(fetchingPostsStart());
+  return deletePost(post.id)
+    .then(posts => {
+      dispatch(fetchPostsComplete(posts));
+    })
+    .catch(error => {
+      dispatch(fetchingPostsError(null, error));
+    });
+};
 
 export const fetchPostsFromCategory = category => dispatch => {
   dispatch(fetchingPostsStart());
@@ -38,6 +65,19 @@ export const fetchPostsComplete = posts => ({
 
 export const fetchingPostsError = error => ({
   type: FETCH_POSTS_ERROR,
+  error
+});
+
+export const deletePostStart = () => ({
+  type: DELETE_POST_START
+});
+
+export const deletePostComplete = post => ({
+  type: DELETE_POST_COMPLETE
+});
+
+export const deletePostError = error => ({
+  type: DELETE_POST_ERROR,
   error
 });
 

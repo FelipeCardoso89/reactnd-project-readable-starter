@@ -1,9 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Home from "./containers/Home";
+import Add from "./containers/Detail";
 import Detail from "./screens/Detail";
-import Add from "./screens/Add";
-import Categories from "./screens/Categories";
 import { Provider } from "react-redux";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import store from "./redux/store";
@@ -14,9 +13,9 @@ const App = ({ store }) => (
     <BrowserRouter>
       <Switch>
         <Route path="/" exact={true} component={Home} />
+        <Route path="/:category" exact={true} component={Home} />
         <Route path="/post/detail" exact={true} component={Detail} />
-        <Route path="/post/add" exact={true} component={Detail} />
-        <Route path="/categories" exact={true} component={Categories} />
+        <Route path="/post/new" exact={true} component={Detail} />
       </Switch>
     </BrowserRouter>
   </Provider>

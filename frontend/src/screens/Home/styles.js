@@ -3,13 +3,18 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   flex: 1;
+`;
+
+export const ContentContainer = styled.div`
+  display: flex;
+  flex: 1;
   justify-content: center;
   align-items: center;
 `;
 
 export const PostsContainer = styled.div`
   display: flex;
-  width: 50%;
+  width: 60%;
   flex-direction: column;
   padding: 16px;
 `;

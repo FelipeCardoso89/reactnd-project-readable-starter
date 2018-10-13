@@ -14,6 +14,7 @@ import {
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import red from "@material-ui/core/colors/red";
 import { withStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
 import moment from "moment";
 
 const styles = theme => ({
@@ -26,8 +27,6 @@ const styles = theme => ({
   }
 });
 
-const options = ["Editar", "Excluir"];
-
 class Post extends Component {
   state = {
     anchorEl: null
@@ -37,12 +36,13 @@ class Post extends Component {
     this.setState({ anchorEl: event.currentTarget });
   };
 
-  handleClose = () => {
+  handleClose = event => {
     this.setState({ anchorEl: null });
   };
 
   render() {
     const { voteScore, title, author, body, timestamp, classes } = this.props;
+    const { onEdit, onDelete } = this.props;
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
 
@@ -66,7 +66,9 @@ class Post extends Component {
           <Typography component="p">{body}</Typography>
         </CardContent>
         <CardActions>
-          <Button size="small">Comentários</Button>
+          <Button component={Link} to={`/posts/new`} size="small">
+            Comentários
+          </Button>
         </CardActions>
         <Menu
           id="long-menu"
@@ -79,11 +81,22 @@ class Post extends Component {
             }
           }}
         >
-          {options.map(option => (
-            <MenuItem key={option} onClick={this.handleClose}>
-              {option}
-            </MenuItem>
-          ))}
+          <MenuItem
+            onClick={event => {
+              this.handleClose(event);
+              onEdit();
+            }}
+          >
+            Editar
+          </MenuItem>
+          <MenuItem
+            onClick={event => {
+              this.handleClose(event);
+              onDelete();
+            }}
+          >
+            Excluir
+          </MenuItem>
         </Menu>
       </Card>
     );
