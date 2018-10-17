@@ -67,7 +67,7 @@ class Post extends Component {
         </CardContent>
         <CardActions>
           <Button component={Link} to={`/posts/new`} size="small">
-            Comentários
+            Detalhes
           </Button>
         </CardActions>
         <Menu

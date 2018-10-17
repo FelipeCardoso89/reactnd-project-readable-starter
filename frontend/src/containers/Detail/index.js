@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
-import Add from "../../screens/Add";
+import Detail from "../../screens/Detail";
 
 const mapStateToProps = state => ({});
 const mapDispatchToProps = dispatch => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Add);
+export default connect(mapStateToProps, mapDispatchToProps)(Detail);

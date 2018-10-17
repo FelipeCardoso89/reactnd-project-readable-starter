@@ -1,8 +1,20 @@
 import React, { Component } from "react";
-import { AppBar, Toolbar, Typography } from "@material-ui/core";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Card,
+  CardContent,
+  CardActions,
+  CardHeader, } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
+import { Container } from './styles'
 
 const styles = theme => ({
+  card: {
+    width: '300px',
+    heigth: '300px' 
+  }, 
   button: {
     position: "absolute",
     bottom: theme.spacing.unit * 2,
@@ -32,18 +44,14 @@ const drawerWidth = 240;
 class Add extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      category: "all"
-    };
+    this.state = {};
   }
 
   componentDidMount() {
-    this.props.fetchCategories();
   }
 
   render() {
-    const { classes, match, history } = this.props;
-    this.props.fetchPosts({ category: match.params.category });
+    const { classes } = this.props
     return (
       <div>
         <AppBar position="static">
@@ -53,6 +61,9 @@ class Add extends Component {
             </Typography>
           </Toolbar>
         </AppBar>
+        <Container>
+          <Card className={classes.card}/>
+        </Container>
       </div>
     );
   }
