@@ -64,7 +64,7 @@ class Add extends Component {
         </AppBar>
         <Container>
           <Card className={classes.card}>
-            <PostForm categories={categories}/>
+            <PostForm categories={categories} onSubmit={(data) => { console.log(data)}}/>
           </Card>
         </Container>
       </div>

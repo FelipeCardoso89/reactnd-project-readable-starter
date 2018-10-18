@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import { Button, Typography, TextField, InputLabel, Select } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import { Link } from "react-router-dom";
-import { Formik, Form, ErrorMessage } from 'formik';
+import { Formik, Form } from 'formik';
 import { Container } from "./styles";
 
 const styles = theme => ({
@@ -25,7 +24,7 @@ const styles = theme => ({
 
 class PostForm extends Component {
   render() {
-    const { classes, categories } = this.props
+    const { classes, categories, onSubmit } = this.props
     return (
         <Container>
         <Formik
@@ -35,38 +34,51 @@ class PostForm extends Component {
         return errors;
       }}
       onSubmit={(values, { setSubmitting }) => {
-        setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 400);
+        onSubmit(values)
+        setSubmitting(false)
       }}
     >
-      {({ isSubmitting }) => (
+      {({ values, handleChange, handleBlur, isSubmitting }) => (
         <Form className={classes.form}>
           <Typography variant="title"> NOVO POST </Typography>
           <TextField
-            id="standard-name"
+            id="title"
             label="Título"
+            onChange={handleChange}
+            onBlur={handleBlur}
             className={classes.textField}
+            value={values.title}
             margin="normal"
           />
           <TextField
-            id="standard-name"
+            id="body"
             label="Conteúdo"
+            onChange={handleChange}
+            onBlur={handleBlur}
             className={classes.textField}
+            value={values.body}
             margin="normal"
           />
           <TextField
-            id="standard-name"
+            id="author"
             label="Nome do autor"
+            onChange={handleChange}
+            onBlur={handleBlur}
             className={classes.textField}
+            value={values.author}
             margin="normal"
           />
           <div className={classes.selectContainer}>
             <InputLabel htmlFor="age-native-simple">Categorias</InputLabel>
-            <Select native>
+            <Select 
+              name="category"
+              value={values.category}
+              onChange={handleChange} 
+              onBlur={handleBlur}
+            >
+ >
             <option value="" />
-              {categories.map(category => <option value={`${category.name}`}>{`${category.name}`}</option>)}
+            {categories.map(category => <option value={`${category.name}`}>{`${category.name}`}</option>)}
             </Select>
           </div>
           <Button type="submit" disabled={isSubmitting}>Criar</Button>
