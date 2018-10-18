@@ -3,17 +3,17 @@ import {
   AppBar,
   Toolbar,
   Typography,
-  Card,
-  CardContent,
-  CardActions,
-  CardHeader, } from "@material-ui/core";
+  Card
+} from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import { Container } from './styles'
+import PostForm from "../../components/PostForm";
 
 const styles = theme => ({
   card: {
-    width: '300px',
-    heigth: '300px' 
+    display: 'flex',
+    width: '60%',
+    height: '60%'
   }, 
   button: {
     position: "absolute",
@@ -62,7 +62,9 @@ class Add extends Component {
           </Toolbar>
         </AppBar>
         <Container>
-          <Card className={classes.card}/>
+          <Card className={classes.card}>
+            <PostForm categories={[{name: 'opcao1'}, {name: 'opcao2'}, {name: 'opcao3'}]}/>
+          </Card>
         </Container>
       </div>
     );

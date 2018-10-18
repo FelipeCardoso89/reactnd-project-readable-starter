@@ -18,7 +18,7 @@ const App = ({ store }) => (
         <Route path="/post/detail/:post" exact={true} component={Detail} />
         <Route path="/post/new" exact={true} component={Add} />
       </Switch>
-    </BrowserRouter>
+    </BrowserRouter> 
   </Provider>
 );
 
