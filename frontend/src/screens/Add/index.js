@@ -48,10 +48,11 @@ class Add extends Component {
   }
 
   componentDidMount() {
+    this.props.fetchCategories();
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, categories } = this.props
     return (
       <div>
         <AppBar position="static">
@@ -63,7 +64,7 @@ class Add extends Component {
         </AppBar>
         <Container>
           <Card className={classes.card}>
-            <PostForm categories={[{name: 'opcao1'}, {name: 'opcao2'}, {name: 'opcao3'}]}/>
+            <PostForm categories={categories}/>
           </Card>
         </Container>
       </div>

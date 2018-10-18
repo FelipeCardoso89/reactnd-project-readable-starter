@@ -48,33 +48,23 @@ class PostForm extends Component {
             id="standard-name"
             label="Título"
             className={classes.textField}
-            value={''}
-            onChange={()=>{}}
             margin="normal"
           />
           <TextField
             id="standard-name"
             label="Conteúdo"
             className={classes.textField}
-            value={''}
-            onChange={() => {}}
             margin="normal"
           />
           <TextField
             id="standard-name"
-            label="Autor"
+            label="Nome do autor"
             className={classes.textField}
-            value={''}
-            onChange={() => {}}
             margin="normal"
           />
           <div className={classes.selectContainer}>
             <InputLabel htmlFor="age-native-simple">Categorias</InputLabel>
-            <Select
-              native
-              value={''}
-              onChange={() => {}}
-            >
+            <Select native>
             <option value="" />
               {categories.map(category => <option value={`${category.name}`}>{`${category.name}`}</option>)}
             </Select>
