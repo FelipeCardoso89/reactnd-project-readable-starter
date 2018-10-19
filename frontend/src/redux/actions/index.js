@@ -106,7 +106,17 @@ export const createPostError = (error) => ({
   error
 })
 
-// Comments
+// Post
+export const FETCH_POST_START = "FETCH_POST_START";
+export const FETCH_POST_COMPLETE = "FETCH_POST_COMPLETE";
+export const FETCH_POST_ERROR = "FETCH_POST_ERROR";
+
+//Comments
+export const FETCH_COMMENTS_START = "FETCH_POST_START";
+export const FETCH_COMMENTS_COMPLETE = "FETCH_POST_COMPLETE";
+export const FETCH_COMMENTS_ERROR = "FETCH_POST_ERROR";
+
+// Categories
 export const FETCH_CATEGORIES_START = "FETCH_CATEGORIES_START";
 export const FETCH_CATEGORIES_COMPLETE = "FETCH_CATEGORIES_COMPLETE";
 export const FETCH_CATEGORIES_ERROR = "FETCH_CATEGORIES_ERROR";

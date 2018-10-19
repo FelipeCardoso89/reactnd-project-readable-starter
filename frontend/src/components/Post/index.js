@@ -41,7 +41,7 @@ class Post extends Component {
   };
 
   render() {
-    const { voteScore, title, author, body, timestamp, classes } = this.props;
+    const { id, voteScore, title, author, body, timestamp, classes } = this.props;
     const { onEdit, onDelete } = this.props;
     const { anchorEl } = this.state;
     const open = Boolean(anchorEl);
@@ -66,7 +66,7 @@ class Post extends Component {
           <Typography component="p">{body}</Typography>
         </CardContent>
         <CardActions>
-          <Button component={Link} to={`/posts/new`} size="small">
+          <Button component={Link} to={`/post/detail/${id}`} size="small">
             Detalhes
           </Button>
         </CardActions>
