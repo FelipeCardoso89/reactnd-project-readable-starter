@@ -48,7 +48,7 @@ class Detail extends Component {
   }
 
   componentDidMount() {
-
+      const  {}
   }
 
   render() {
