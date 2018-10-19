@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button, Typography, TextField, InputLabel, Select } from "@material-ui/core";
+import uuid from 'uuid'
 import { withStyles } from "@material-ui/core/styles";
 import { Formik, Form } from 'formik';
 import { Container } from "./styles";
@@ -24,7 +25,7 @@ const styles = theme => ({
 
 class PostForm extends Component {
   render() {
-    const { classes, categories, onSubmit } = this.props
+    const { classes, categories, submit } = this.props
     return (
         <Container>
         <Formik
@@ -34,7 +35,9 @@ class PostForm extends Component {
         return errors;
       }}
       onSubmit={(values, { setSubmitting }) => {
-        onSubmit(values)
+        setSubmitting(true)
+        Object.assign(values, { id: uuid(), timestamp: Date.now()} )
+        submit(values)
         setSubmitting(false)
       }}
     >

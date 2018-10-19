@@ -48,17 +48,24 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      category: "all"
+      category: this.props.match.params.category || "all"
     };
   }
 
   componentDidMount() {
-    this.props.fetchCategories();
+    const { fetchPosts, fetchCategories } = this.props;
+    fetchCategories();
+    fetchPosts({ category: this.state.category });
   }
 
   render() {
-    const { classes, match, history } = this.props;
-    this.props.fetchPosts({ category: match.params.category });
+    const { classes, match, history, fetchPosts } = this.props;
+    if(match.params.category !== this.state.category){
+      this.setState({category : match.params.category}, () => {
+        fetchPosts({ category: this.state.category });
+      });
+    }
+
     return (
       <div>
         <AppBar position="static">
@@ -110,13 +117,12 @@ class Home extends Component {
                     key={post.id}
                     {...post}
                     onEdit={() => {
-                      console.log("Edit", post.id);
                       history.push(`/post/detail/${post.id}`, {
                         editing: true
                       });
                     }}
                     onDelete={() => {
-                      console.log("Delete", post);
+                      // console.log("Delete", post);
                       // this.props.deletePost(post)
                     }}
                   />

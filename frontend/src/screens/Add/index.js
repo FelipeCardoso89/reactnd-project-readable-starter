@@ -52,7 +52,7 @@ class Add extends Component {
   }
 
   render() {
-    const { classes, categories } = this.props
+    const { classes, categories,  } = this.props
     return (
       <div>
         <AppBar position="static">
@@ -64,7 +64,7 @@ class Add extends Component {
         </AppBar>
         <Container>
           <Card className={classes.card}>
-            <PostForm categories={categories} onSubmit={(data) => { console.log(data)}}/>
+            <PostForm categories={categories} submit={this.props.addNewPost}/>
           </Card>
         </Container>
       </div>

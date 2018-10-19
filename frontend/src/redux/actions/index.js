@@ -1,6 +1,7 @@
 import {
   getPosts,
   deletePost,
+  addPost,
   getCategories,
   getPostsFromCategory
 } from "../../api";
@@ -20,6 +21,17 @@ export const DELETE_POST_ERROR = "DELETE_POST_ERROR";
 export const CREATE_POST_START = "CREATE_POST_START";
 export const CREATE_POST_COMPLETE = "CREATE_POST_COMPLETE";
 export const CREATE_POST_ERROR = "CREATE_POST_ERROR";
+
+export const createPost = post => dispatch => {
+  dispatch(createPostStart());
+  return addPost(post)
+    .then(post => {
+      dispatch(createPostComplete(post))
+    })
+    .catch(error => {
+      dispatch(createPostError(error))
+    })
+}
 
 export const postDelete = post => dispatch => {
   dispatch(fetchingPostsStart());
@@ -80,6 +92,19 @@ export const deletePostError = error => ({
   type: DELETE_POST_ERROR,
   error
 });
+
+export const createPostStart = () => ({
+  type: CREATE_POST_START
+})
+
+export const createPostComplete = () => ({
+  type: CREATE_POST_COMPLETE
+})
+
+export const createPostError = (error) => ({
+  type: CREATE_POST_ERROR,
+  error
+})
 
 // Comments
 export const FETCH_CATEGORIES_START = "FETCH_CATEGORIES_START";

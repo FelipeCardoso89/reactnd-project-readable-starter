@@ -1,12 +1,12 @@
 const api = 'http://localhost:3001';
-const defaultParameters = { headers: { Authorization: 'whatever-you-want' } };
+const defaultParameters = { headers: { Authorization: 'whatever-you-want', 'Content-Type': 'application/json' }};
 // Category
 export const getCategories = () => fetch(`${api}/categories`, defaultParameters).then(response => response.json());
 export const getPostsFromCategory = category => fetch(`${api}/${category}/posts`, defaultParameters).then(response => response.json());
 
 // Posts
 export const getPosts = () => fetch(`${api}/posts`, defaultParameters).then(response => response.json());
-export const addPost = post => fetch(`${api}/posts`, Object.assign(defaultParameters, { method: 'posts', body: post })).then(response => response.json());
+export const addPost = post => fetch(`${api}/posts`, Object.assign(defaultParameters, { method: 'POST', body: post ? JSON.stringify(post) : undefined })).then(response => response.json());
 export const getPost = postId => fetch(`${api}/posts/${postId}`, defaultParameters).then(response => response.json());
 export const editPost = (postId, title, content) => fetch(`${api}/posts/${postId}`, Object.assign(defaultParameters, { method: 'PUT', body: {title, body: content}})).then(response => response.json());
 export const deletePost = postId => fetch(`${api}/posts/${postId}`, Object.assign(defaultParameters, { method: 'DELETE' })).then(response => response.json());
