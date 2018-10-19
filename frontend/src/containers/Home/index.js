@@ -25,9 +25,9 @@ const mapDispatchToProps = dispatch => ({
     dispatch(fetchPosts());
     dispatch(fetchCategories());
   },
-  fetchDelete(post) {
+  deletePost(post) {
     dispatch(postDelete(post));
-  }
+  },
 });
 
 export default connect(

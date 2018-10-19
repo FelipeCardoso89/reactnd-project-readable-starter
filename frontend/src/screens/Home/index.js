@@ -122,8 +122,8 @@ class Home extends Component {
                       });
                     }}
                     onDelete={() => {
-                      // console.log("Delete", post);
-                      // this.props.deletePost(post)
+                      this.props.deletePost(post)
+                      window.location.reload();                     
                     }}
                   />
                 ))) || (

@@ -34,13 +34,13 @@ export const createPost = post => dispatch => {
 }
 
 export const postDelete = post => dispatch => {
-  dispatch(fetchingPostsStart());
+  dispatch(deletePostStart());
   return deletePost(post.id)
-    .then(posts => {
-      dispatch(fetchPostsComplete(posts));
+    .then(response => {
+      dispatch(deletePostComplete());
     })
     .catch(error => {
-      dispatch(fetchingPostsError(null, error));
+      dispatch(deletePostError(null, error));
     });
 };
 
