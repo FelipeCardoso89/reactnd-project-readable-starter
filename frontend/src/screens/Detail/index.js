@@ -8,6 +8,7 @@ import {
 import { withStyles } from "@material-ui/core/styles";
 import { Container } from './styles'
 import Post from "../../components/Post";
+import Comment from "../../components/Comment";
 
 const styles = theme => ({
   card: {
@@ -48,11 +49,14 @@ class Detail extends Component {
   }
 
   componentDidMount() {
-      const  {}
+      const { match, getPost, getComments } = this.props;
+      this.props.match.params.post && getComments(this.props.match.params.post)
+      this.props.match.params.post && getPost(this.props.match.params.post)
   }
 
   render() {
-    const { classes, categories } = this.props
+    const { classes, post, comments, history } = this.props
+    const { deleteComment } = this.props
     return (
       <div>
         <AppBar position="static">
@@ -63,7 +67,20 @@ class Detail extends Component {
           </Toolbar>
         </AppBar>
         <Container>
-
+        {post && (
+          <Post
+            key={post.id}
+            {...post}
+            onEdit={() => {
+              history.push(`/post/detail/${post.id}`, { editing: true });
+            }}
+            onDelete={() => {
+              this.props.deletePost(post)
+              window.location.reload();                     
+            }}
+          />
+        )}
+        {comments && comments.map(comment => <Comment comment={comment} onDelete={(commentId) => { deleteComment(commentId)}} />)}
         </Container>
       </div>
     );

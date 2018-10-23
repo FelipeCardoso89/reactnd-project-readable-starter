@@ -1,7 +1,9 @@
 import {
   getPosts,
+  getPost,
   deletePost,
   addPost,
+  getCommentsFromPost,
   getCategories,
   getPostsFromCategory
 } from "../../api";
@@ -111,10 +113,60 @@ export const FETCH_POST_START = "FETCH_POST_START";
 export const FETCH_POST_COMPLETE = "FETCH_POST_COMPLETE";
 export const FETCH_POST_ERROR = "FETCH_POST_ERROR";
 
+export const fetchPost = (postId) => dispatch => {
+  dispatch(fetchingPostStart());
+  return getPost(postId)
+    .then(post => {
+      dispatch(fetchPostComplete(post));
+    })
+    .catch(error => {
+      dispatch(fetchingPostError(null, error));
+    });
+};
+
+export const fetchingPostStart = () => ({
+  type: FETCH_POST_START
+});
+
+export const fetchPostComplete = post => ({
+  type: FETCH_POST_COMPLETE,
+  post
+});
+
+export const fetchingPostError = error => ({
+  type: FETCH_POST_ERROR,
+  error
+});
+
 //Comments
-export const FETCH_COMMENTS_START = "FETCH_POST_START";
-export const FETCH_COMMENTS_COMPLETE = "FETCH_POST_COMPLETE";
-export const FETCH_COMMENTS_ERROR = "FETCH_POST_ERROR";
+export const FETCH_COMMENTS_START = "FETCH_COMMENTS_START";
+export const FETCH_COMMENTS_COMPLETE = "FETCH_COMMENTS_COMPLETE";
+export const FETCH_COMMENTS_ERROR = "FETCH_COMMENTS_ERROR";
+
+export const fetchPostComments = (postId) => dispatch => {
+  dispatch(fetchCommentsStart());
+  return getCommentsFromPost(postId)
+    .then(comments => {
+      dispatch(fetchCommentsComplete(comments));
+    })
+    .catch(error => {
+      dispatch(fetchCommentsError(null, error));
+    });
+};
+
+export const fetchCommentsStart = () => ({
+  type: FETCH_COMMENTS_START
+});
+
+export const fetchCommentsComplete = comments => ({
+  type: FETCH_COMMENTS_COMPLETE,
+  comments
+});
+
+export const fetchCommentsError = error => ({
+  type: FETCH_COMMENTS_ERROR,
+  error
+});
 
 // Categories
 export const FETCH_CATEGORIES_START = "FETCH_CATEGORIES_START";

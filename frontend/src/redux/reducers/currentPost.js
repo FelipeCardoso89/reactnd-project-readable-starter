@@ -2,6 +2,9 @@ import {
     FETCH_POST_START,
     FETCH_POST_COMPLETE,
     FETCH_POST_ERROR,
+    FETCH_COMMENTS_START,
+    FETCH_COMMENTS_COMPLETE,
+    FETCH_COMMENTS_ERROR
 } from '../actions'
 
 const postInitialState = {
@@ -11,29 +14,62 @@ const postInitialState = {
   error: null
 }
 
-export const posts = (state = postsInitialState, action) => {
+export const currentPost = (state = postInitialState, action) => {
+    console.log("Old State", state)
+    console.log("Action", action)
+    console.log("===================")
+    let newState = state
     switch(action.type) {
         case FETCH_POST_START:
-            return { 
+            newState = { 
                 ...state,
                 loading: true,
             }
+            break
         case FETCH_POST_COMPLETE:
-            return { 
+            newState = { 
                 ...state,
                 loading: false,
                 error: null,
-                posts: action.posts
+                post: action.post,
             }
+            break
         case FETCH_POST_ERROR:
-            return { 
+            newState = { 
                 ...state,
                 loading: false,
                 error: action.error
             }
+            break
+        case FETCH_COMMENTS_START:
+            newState = {
+                ...state,
+                loading: true,
+            }
+            break
+        case FETCH_COMMENTS_COMPLETE :
+            newState = {
+                ...state,
+                loading: false,
+                error: null,
+                comments: action.comments,
+            }
+            break
+        case FETCH_COMMENTS_ERROR:
+            newState = {
+                ...state,
+                loading: false,
+                error: action.error
+            }
+            break
+        
         default:
-            return state
+            newState = state
     }
+
+    console.log("NewState", newState)
+    console.log("===================")
+    return newState
 }
 
 export default currentPost

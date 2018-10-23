@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Home from "./containers/Home";
-import Detail from "./screens/Detail";
+import Detail from "./containers/Detail";
 import Add from "./containers/Add"
 import { Provider } from "react-redux";
 import { BrowserRouter, Switch, Route } from "react-router-dom";

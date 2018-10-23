@@ -20,7 +20,8 @@ import moment from "moment";
 const styles = theme => ({
   card: {
     marginTop: 16,
-    marginBottom: 8
+    marginBottom: 8,
+    width: 900
   },
   avatar: {
     backgroundColor: red[500]
