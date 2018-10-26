@@ -1,13 +1,5 @@
 import React, { Component } from "react";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Card
-} from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import { Container } from './styles'
-import PostForm from "../../components/PostForm";
 
 const styles = theme => ({});
 

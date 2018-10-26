@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { fetchPost, fetchPostComments } from "../../redux/actions";
+import { fetchPost, postDelete, fetchPostComments } from "../../redux/actions";
 import Detail from "../../screens/Detail";
 
 const mapStateToProps = state => ({
@@ -8,14 +8,26 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    getPost(postId) {
-        dispatch(fetchPost(postId));
+    getPost(post) {
+        dispatch(fetchPost(post));
     },
-    getComments(postId) {
-       dispatch(fetchPostComments(postId)); 
+    deletePost(post) {
+        dispatch(postDelete(post));
     },
-    deleteComment(commentId) {
-        console.log("Delete Comment:", commentId)
+    savePost(post) {
+        console.log("Save Post", post)
+    },
+    getComments(post) {
+       dispatch(fetchPostComments(post)); 
+    },
+    voteComment(comment, voteUp) {
+        console.log("Comment Vote:", comment, voteUp)
+    },
+    saveComment(comment) {
+        console.log("Save comment:", comment)
+    },
+    deleteComment(comment) {
+        console.log("Delete Comment:", comment)
     }
 });
 

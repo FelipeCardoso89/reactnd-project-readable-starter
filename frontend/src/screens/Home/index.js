@@ -1,48 +1,22 @@
 import React, { Component } from "react";
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  ListItem,
-  ListItemText,
-  ListItemAvatar,
-  Avatar,
-  Drawer
-} from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
+import { Button } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
-import PersonIcon from "@material-ui/icons/Person";
-import { Link } from "react-router-dom";
-import Post from "../../components/Post";
-import { Container, ContentContainer, PostsContainer } from "./styles";
 
 const styles = theme => ({
-  button: {
-    position: "absolute",
+  fab: {
+    position: 'absolute',
     bottom: theme.spacing.unit * 2,
-    right: theme.spacing.unit * 2
-  },
-  extendedIcon: {
-    marginRight: theme.spacing.unit
-  },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1
-  },
-  drawerPaper: {
-    position: "relative",
-    width: drawerWidth
-  },
-  content: {
-    flexGrow: 1,
-    backgroundColor: theme.palette.background.default,
-    padding: theme.spacing.unit * 3,
-    minWidth: 0 // So the Typography noWrap works
-  },
-  toolbar: theme.mixins.toolbar
+    right: theme.spacing.unit * 2,
+  }
 });
 
-const drawerWidth = 240;
+const AddPostButton = (props) => {
+  return (
+    <Button variant="fab" color="primary" {...props}>
+      <AddIcon />
+    </Button>)
+}
 
 class Home extends Component {
   constructor(props) {
@@ -57,7 +31,8 @@ class Home extends Component {
   }
 
   render() {
-    return <div> HOME </div>
+    const { classes } = this.props;
+    return <div> <AddPostButton onClick={() => { console.log("Adicionar Post") }} className={classes.fab}/> </div>
   }
 }
 

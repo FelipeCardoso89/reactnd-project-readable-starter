@@ -1,96 +1,95 @@
-import React, { Component } from "react";
-import { Button, Typography, TextField, InputLabel, Select } from "@material-ui/core";
-import uuid from 'uuid'
-import { withStyles } from "@material-ui/core/styles";
-import { Formik, Form } from 'formik';
-import { Container } from "./styles";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+
+import {
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle
+} from '@material-ui/core'
+
+import {
+    Button,
+    Select,
+    TextField,
+    MenuItem
+} from '@material-ui/core'
+
+type PostFormProps = {
+    open: boolean,
+    handleClose: func,
+    handleSave: func,
+    categories: object,
+    post: object
+}
 
 const styles = theme => ({
-  textField: {
-
+  button: {
+    display: 'block',
+    marginTop: theme.spacing.unit * 2,
   },
-  form: {
-    display: 'flex',
-    flex: 1,
-    flexDirection: 'column',
-    padding: 32
+  formControl: {
+    margin: theme.spacing.unit,
+    minWidth: 120,
   },
-  selectContainer: {
-    display: 'flex',
-    flex: 1,
-    flexDirection: 'column',
-    marginTop: 32
-  }
 });
 
-class PostForm extends Component {
-  render() {
-    const { classes, categories, submit } = this.props
-    return (
-        <Container>
-        <Formik
-        initialValues={{ title: '', body: '', author: '', category: '' }}
-        validate={values => {
-        let errors = {};
-        return errors;
-      }}
-      onSubmit={(values, { setSubmitting }) => {
-        setSubmitting(true)
-        Object.assign(values, { id: uuid(), timestamp: Date.now()} )
-        submit(values)
-        setSubmitting(false)
-      }}
-    >
-      {({ values, handleChange, handleBlur, isSubmitting }) => (
-        <Form className={classes.form}>
-          <Typography variant="title"> NOVO POST </Typography>
-          <TextField
-            id="title"
-            label="Título"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            className={classes.textField}
-            value={values.title}
-            margin="normal"
-          />
-          <TextField
-            id="body"
-            label="Conteúdo"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            className={classes.textField}
-            value={values.body}
-            margin="normal"
-          />
-          <TextField
-            id="author"
-            label="Nome do autor"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            className={classes.textField}
-            value={values.author}
-            margin="normal"
-          />
-          <div className={classes.selectContainer}>
-            <InputLabel htmlFor="age-native-simple">Categorias</InputLabel>
-            <Select 
-              name="category"
-              value={values.category}
-              onChange={handleChange} 
-              onBlur={handleBlur}
-            >
- >
-            <option value="" />
-            {categories.map(category => <option value={`${category.name}`}>{`${category.name}`}</option>)}
-            </Select>
-          </div>
-          <Button type="submit" disabled={isSubmitting}>Criar</Button>
-        </Form>
-      )}
-    </Formik>
-        </Container>
-    );
-  }
+class PostForm extends Component<PostFormProps> {
+
+    state = {
+        categorySelectorOpen: false,
+        currentCategory: null
+    }
+
+    categorySelectorHandleOpen = () => {
+        this.setState({ categorySelectorOpen: true })
+    }
+
+    categorySelectorHandleClose = () => {
+        this.setState({ categorySelectorOpen: false })
+    }
+
+    categorySelectorHandleChange = event => {
+        this.setState({ currentCategory: event.target.value });
+    }
+
+    render() {
+        const { open, handleClose, handleSave, categories, post } = this.props
+        const { categorySelectorOpen, currentCategory } = this.state
+        
+        return (
+            <div>
+                <Dialog open={open} onClose={handleClose}>
+                    <DialogTitle>NOVA POSTAGEM</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>Preencha o formulário a baixo</DialogContentText>
+                        <TextField autoFocus fullWidth margin="dense" id="title" label="Título"/>
+                        <TextField autoFocus fullWidth margin="dense" id="body" label="Conteúdo"/>
+                        <TextField autoFocus fullWidth margin="dense" id="author" label="Author"/>
+                        <Select
+                            open={categorySelectorOpen}
+                            value={currentCategory}
+                            onClose={this.categorySelectorHandleClose}
+                            onOpen={this.categorySelectorHandleOpen}
+                            onChange={this.categorySelectorHandleChange}
+                        >
+                        {categories.map(category => <MenuItem value={category.path}>{category.name}</MenuItem>)}
+                        </Select>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleSave} color="primary">SALVAR</Button>
+                        <Button onClick={handleClose} color="primary">CANCELAR</Button>
+                    </DialogActions>
+                </Dialog>
+            </div>
+        )
+    }
 }
+
+PostForm.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
 export default withStyles(styles)(PostForm);

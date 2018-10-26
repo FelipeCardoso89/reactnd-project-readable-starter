@@ -15,9 +15,6 @@ const postInitialState = {
 }
 
 export const currentPost = (state = postInitialState, action) => {
-    console.log("Old State", state)
-    console.log("Action", action)
-    console.log("===================")
     let newState = state
     switch(action.type) {
         case FETCH_POST_START:
@@ -66,9 +63,7 @@ export const currentPost = (state = postInitialState, action) => {
         default:
             newState = state
     }
-
-    console.log("NewState", newState)
-    console.log("===================")
+    
     return newState
 }
 

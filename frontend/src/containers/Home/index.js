@@ -13,21 +13,24 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  fetchAllPosts() {
+    dispatch(fetchPosts());
+  },
   fetchPosts({ category }) {
-    category && category !== "all"
-      ? dispatch(fetchPostsFromCategory(category))
-      : dispatch(fetchPosts());
+    dispatch(fetchPostsFromCategory(category))
   },
   fetchCategories() {
     dispatch(fetchCategories());
   },
-  fetchInitialData() {
-    dispatch(fetchPosts());
-    dispatch(fetchCategories());
+  savePost(post) {
+    console.log("Save post", post)
   },
-  deletePost(post) {
-    dispatch(postDelete(post));
+  deletePost(postId) {
+    dispatch(postDelete(postId));
   },
+  votePost(post, voteUp) {
+    console.log("Vote Post: ", post, voteUp)
+  }
 });
 
 export default connect(
