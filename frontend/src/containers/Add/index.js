@@ -12,7 +12,7 @@ const mapDispatchToProps = dispatch => ({
     },
     addNewPost(data) {
         dispatch(createPost(data))
-    },
+    }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Add);
