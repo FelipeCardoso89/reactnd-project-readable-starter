@@ -13,19 +13,14 @@ import {
 
 import {
     Button,
-    Select,
     TextField,
-    InputLabel,
-    FormControl,
-    MenuItem,
     CircularProgress
 } from '@material-ui/core'
 
-type PostFormProps = {
+type CommentFormProps = {
     open: boolean,
     handleClose: func,
     handleSave: func,
-    categories: object,
     post: object
 }
 
@@ -59,13 +54,8 @@ const ActivityIndicator = ({classes, open, handleClose}) => {
 const Form = props => {
 
     const { 
-        classes, 
         open,
-        handleClose,
-        categorySelectorOpen,
-        categorySelectorHandleClose,
-        categorySelectorHandleOpen,
-        categories,
+        handleClose
     } = props
 
     const {
@@ -78,21 +68,10 @@ const Form = props => {
     return (
         <div> 
             <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Nova postagem</DialogTitle>
+                <DialogTitle>Novo comentário</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>Crie seu novo post</DialogContentText>
-                    
-                    <TextField 
-                        autoFocus
-                        fullWidth
-                        onChange={handleChange}
-                        onBlur={handleBlur}
-                        margin="dense" 
-                        id="title"
-                        label="Título"
-                        value={values.title}
-                    />
-
+                    <DialogContentText>Deixe seu commentário</DialogContentText>
+                
                     <TextField 
                         fullWidth 
                         onChange={handleChange}
@@ -112,21 +91,6 @@ const Form = props => {
                         label="Autor"
                         value={values.author}
                     />
-
-                    <FormControl className={classes.formControl}>
-                        <InputLabel htmlFor="age-native-simple">Categoria</InputLabel>
-                        <Select
-                            name="category"
-                            open={categorySelectorOpen}
-                            value={values.category}
-                            onClose={categorySelectorHandleClose}
-                            onOpen={categorySelectorHandleOpen}
-                            onChange={handleChange} 
-                            onBlur={handleBlur}
-                        >
-                        {categories.map(category => <MenuItem key={category.path} value={category.path}>{category.name}</MenuItem>)}
-                        </Select>
-                    </FormControl>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleClose} color="primary">CANCELAR</Button>
@@ -137,23 +101,7 @@ const Form = props => {
     )
 } 
 
-class PostForm extends Component<PostFormProps> {
-
-    constructor(props) {
-        super(props)
-        this.state = {
-            categorySelectorOpen: false
-        }
-    }
-
-    categorySelectorHandleClose = () => {
-        this.setState({ categorySelectorOpen: false })
-    }
-
-    categorySelectorHandleOpen = () => {
-        this.setState({ categorySelectorOpen: true })
-    }
-
+class CommentForm extends Component<CommentFormProps> {
     render() {
 
         const { handleSave } = this.props
@@ -161,8 +109,7 @@ class PostForm extends Component<PostFormProps> {
         return (
             <div>
                 <Formik
-                    ref={this.formik}
-                    initialValues={{ title: '', body: '', author: '', category: '' }}
+                    initialValues={{ body: '', author: '' }}
                     validate={values => {}}
                     onSubmit={handleSave}
                 >
@@ -176,8 +123,8 @@ class PostForm extends Component<PostFormProps> {
     }
 }
 
-PostForm.propTypes = {
+CommentForm.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(PostForm);
+export default withStyles(styles)(CommentForm);

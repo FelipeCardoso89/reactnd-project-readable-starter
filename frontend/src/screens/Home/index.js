@@ -38,12 +38,13 @@ class Home extends Component {
     const { postFormOpen, loading }  = this.state;
     return (
       <div> 
+
         <PostForm 
           loading={loading}
           categories={categories} 
           open={postFormOpen} 
           handleClose={() => { this.setState({ postFormOpen: false }) }}
-          handleSave={(values, { setSubmitting }) => {
+          handleSave={(values, { setSubmitting })  => {
 
             this.props.savePost({ 
               title: values.title,
@@ -51,10 +52,12 @@ class Home extends Component {
               author: values.author,
               category: values.category
             })
-            
+
             setSubmitting(false)
+            this.setState({ postFormOpen: false })
           }}
         />
+
         <AddPostButton 
           onClick={() => { this.setState({ postFormOpen: true, postToEdit: null }) }}
           className={classes.fab}
