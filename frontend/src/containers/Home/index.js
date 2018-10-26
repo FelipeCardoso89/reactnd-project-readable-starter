@@ -3,16 +3,21 @@ import {
   fetchPosts,
   fetchCategories,
   fetchPostsFromCategory,
-  postDelete
+  postDelete,
+  createPost,
 } from "../../redux/actions";
 import Home from "../../screens/Home";
 
 const mapStateToProps = state => ({
   posts: state.post.posts,
-  categories: state.category.categories
+  categories: state.category.categories || []
 });
 
 const mapDispatchToProps = dispatch => ({
+  fetchAllData() {
+    dispatch(fetchPosts());
+    dispatch(fetchCategories());
+  },
   fetchAllPosts() {
     dispatch(fetchPosts());
   },
@@ -23,13 +28,14 @@ const mapDispatchToProps = dispatch => ({
     dispatch(fetchCategories());
   },
   savePost(post) {
-    console.log("Save post", post)
+    dispatch(createPost(post))
   },
-  deletePost(postId) {
-    dispatch(postDelete(postId));
+  deletePost(post) {
+    dispatch(postDelete(post));
   },
   votePost(post, voteUp) {
     console.log("Vote Post: ", post, voteUp)
+    dispatch(postDelete(post));
   }
 });
 

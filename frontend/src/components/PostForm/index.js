@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
+import { Formik } from 'formik';
 import { withStyles } from '@material-ui/core/styles';
 
 import {
@@ -14,7 +15,10 @@ import {
     Button,
     Select,
     TextField,
-    MenuItem
+    InputLabel,
+    FormControl,
+    MenuItem,
+    CircularProgress
 } from '@material-ui/core'
 
 type PostFormProps = {
@@ -31,58 +35,145 @@ const styles = theme => ({
     marginTop: theme.spacing.unit * 2,
   },
   formControl: {
-    margin: theme.spacing.unit,
     minWidth: 120,
   },
-});
+  form: {
+    display: 'flex',
+    width: 300,
+    heigth: 400
+  }
+})
+
+const ActivityIndicator = ({classes, open, handleClose}) => {
+    return (
+        <div className={classes.form}>
+            <Dialog open={open} onClose={handleClose}> 
+                <DialogContent>
+                    <CircularProgress size={80} />
+                </DialogContent>
+            </Dialog>
+        </div>
+    )
+}
+
+const Form = props => {
+
+    const { 
+        classes, 
+        open,
+        handleClose,
+        categorySelectorOpen,
+        categorySelectorHandleClose,
+        categorySelectorHandleOpen,
+        categories,
+    } = props
+
+    const {
+        values,
+        handleChange,
+        handleBlur,
+        handleSubmit
+    } = props
+
+    return (
+        <div> 
+            <Dialog open={open} onClose={handleClose}>
+                <DialogTitle>Nova postagem</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>Crie seu novo post</DialogContentText>
+                    
+                    <TextField 
+                        autoFocus
+                        fullWidth
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        margin="dense" 
+                        id="title"
+                        label="Título"
+                        value={values.title}
+                    />
+
+                    <TextField 
+                        fullWidth 
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        margin="dense" 
+                        id="body" 
+                        label="Conteúdo"
+                        value={values.body}
+                    />
+
+                    <TextField
+                        fullWidth
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        margin="dense"
+                        id="author"
+                        label="Autor"
+                        value={values.author}
+                    />
+
+                    <FormControl className={classes.formControl}>
+                        <InputLabel htmlFor="age-native-simple">Categoria</InputLabel>
+                        <Select
+                            name="category"
+                            open={categorySelectorOpen}
+                            value={values.category}
+                            onClose={categorySelectorHandleClose}
+                            onOpen={categorySelectorHandleOpen}
+                            onChange={handleChange} 
+                            onBlur={handleBlur}
+                        >
+                        {categories.map(category => <MenuItem key={category.path} value={category.path}>{category.name}</MenuItem>)}
+                        </Select>
+                    </FormControl>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} color="primary">CANCELAR</Button>
+                    <Button onClick={handleSubmit} color="primary">SALVAR</Button>
+                </DialogActions>
+            </Dialog>
+        </div>
+    )
+} 
 
 class PostForm extends Component<PostFormProps> {
 
-    state = {
-        categorySelectorOpen: false,
-        currentCategory: null
+    constructor(props) {
+        super(props)
+        this.state = {
+            categorySelectorOpen: false
+        }
     }
 
-    categorySelectorHandleOpen = () => {
-        this.setState({ categorySelectorOpen: true })
+    componentDidMount () {
+        this.props.fet
     }
 
     categorySelectorHandleClose = () => {
         this.setState({ categorySelectorOpen: false })
     }
 
-    categorySelectorHandleChange = event => {
-        this.setState({ currentCategory: event.target.value });
+    categorySelectorHandleOpen = () => {
+        this.setState({ categorySelectorOpen: true })
     }
 
     render() {
-        const { open, handleClose, handleSave, categories, post } = this.props
-        const { categorySelectorOpen, currentCategory } = this.state
-        
+
+        const { handleSave } = this.props
+
         return (
             <div>
-                <Dialog open={open} onClose={handleClose}>
-                    <DialogTitle>NOVA POSTAGEM</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText>Preencha o formulário a baixo</DialogContentText>
-                        <TextField autoFocus fullWidth margin="dense" id="title" label="Título"/>
-                        <TextField autoFocus fullWidth margin="dense" id="body" label="Conteúdo"/>
-                        <TextField autoFocus fullWidth margin="dense" id="author" label="Author"/>
-                        <Select
-                            open={categorySelectorOpen}
-                            value={currentCategory}
-                            onClose={this.categorySelectorHandleClose}
-                            onOpen={this.categorySelectorHandleOpen}
-                            onChange={this.categorySelectorHandleChange}
-                        >
-                        {categories.map(category => <MenuItem value={category.path}>{category.name}</MenuItem>)}
-                        </Select>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={handleSave} color="primary">SALVAR</Button>
-                        <Button onClick={handleClose} color="primary">CANCELAR</Button>
-                    </DialogActions>
-                </Dialog>
+                <Formik
+                    initialValues={{ title: '', body: '', author: '', category: '' }}
+                    validate={values => {}}
+                    onSubmit={handleSave}
+                >
+                {({isSubmitting, ...formProps }) => {
+                    if(isSubmitting) { return ( <ActivityIndicator {...this.props} /> ) }
+                    return <Form {...this.props} {...formProps} />
+                }}
+                </Formik>
             </div>
         )
     }

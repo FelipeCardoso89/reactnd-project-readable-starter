@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import { Button } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
+import PostForm from "../../components/PostForm"
 
 const styles = theme => ({
   fab: {
@@ -22,17 +23,44 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      category: "all"
+      postFormOpen: false,
+      postToEdit: null,
+      loading: false
     };
   }
 
   componentDidMount() {
-
+    this.props.fetchAllData()
   }
 
   render() {
-    const { classes } = this.props;
-    return <div> <AddPostButton onClick={() => { console.log("Adicionar Post") }} className={classes.fab}/> </div>
+    const { classes, categories } = this.props;
+    const { postFormOpen, loading }  = this.state;
+    return (
+      <div> 
+        <PostForm 
+          loading={loading}
+          categories={categories} 
+          open={postFormOpen} 
+          handleClose={() => { this.setState({ postFormOpen: false }) }}
+          handleSave={(values, { setSubmitting }) => {
+
+            this.props.savePost({ 
+              title: values.title,
+              body: values.body,
+              author: values.author,
+              category: values.category
+            })
+            
+            setSubmitting(false)
+          }}
+        />
+        <AddPostButton 
+          onClick={() => { this.setState({ postFormOpen: true, postToEdit: null }) }}
+          className={classes.fab}
+        />
+      </div>
+    )
   }
 }
 
